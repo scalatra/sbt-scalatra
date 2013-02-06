@@ -6,7 +6,7 @@ sbtPlugin := true
 
 publishMavenStyle := false
 
-version := "0.1.0-SNAPSHOT"
+version := "0.1.0"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
