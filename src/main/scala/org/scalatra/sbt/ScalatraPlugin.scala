@@ -26,10 +26,10 @@ object ScalatraPlugin extends Plugin {
     }
   }
 
-  val scalatraSettings = webSettings ++ Seq(
+  val scalatraSettings: Seq[Project.Setting[_]] = webSettings ++ Seq(
     browseTask
   )
 
-  val scalatraWithJRebel = scalatraSettings ++ Seq(JRebelPlugin.jrebelSettings)
+  val scalatraWithJRebel: Seq[Project.Setting[_]] = scalatraSettings ++ JRebelPlugin.jrebelSettings
 
 }

@@ -35,7 +35,7 @@ object JRebelPlugin {
         IO.write(res, content, Codec.UTF8, append = false)
     }
 
-  val jrebelSettings = Seq(
+  val jrebelSettings: Seq[Project.Setting[_]] = Seq(
     generateJRebel in Compile <<= generateJRebelXmlTask,
     generateJRebel <<= generateJRebel in Compile,
     compile in Compile <<= (compile in Compile).dependsOn(generateJRebel in Compile)
