@@ -13,7 +13,7 @@ object JRebelPlugin {
   def generateJRebelXmlTask: sbt.Project.Initialize[Task[Unit]] =
     (resourceManaged in Compile, crossTarget in Compile, crossTarget in Test, webappResources in Compile, streams) map {
       (tgt, src, tst, extra, s) =>
-        val content = (scala.xml.Utility trimProper {
+        val content = 
           <application
               xsi:schemaLocation="http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -28,8 +28,7 @@ object JRebelPlugin {
                 {extra map { e => <dir name={e.getAbsolutePath} />}}
               </link>
             </web>
-          </application>
-        }).toString()
+          </application>.toString()
         val res = tgt / "rebel.xml"
         s.log.info("Generating %s.".format(res, content))
         IO.write(res, content, Codec.UTF8, append = false)
