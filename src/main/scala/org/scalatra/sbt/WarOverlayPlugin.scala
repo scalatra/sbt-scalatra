@@ -34,11 +34,10 @@ object WarOverlayPlugin extends Plugin {
   }
 
   val warOverlaySettings: Seq[sbt.Setting[_]] = Seq(
-    classpathTypes += "war",
     target in (Compile, overlayWars) <<= (target in Compile)(_ / "overlays"),
     overlayWars in Compile <<= overlayWarsTask,
     overlayWars <<= (overlayWars in Compile),
-    webappResources in Compile <<= (target in (Compile, overlayWars), webappResources in Compile)(_ +: _),
+    webappResources in Compile <<= (webappResources in Compile, target in (Compile, overlayWars))(_ :+ _),
     start in container.Configuration <<= (start in container.Configuration).dependsOn(overlayWars in Compile),
     packageWar in Compile <<= (packageWar in Compile).dependsOn(overlayWars in Compile)
   )
