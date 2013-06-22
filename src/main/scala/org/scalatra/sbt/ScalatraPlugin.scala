@@ -3,8 +3,8 @@ package org.scalatra.sbt
 import sbt._
 import Keys._
 import java.net.URI
-import com.github.siasia.PluginKeys.port
-import com.github.siasia.WebPlugin.{container, webSettings}
+import com.earldouglas.xsbtwebplugin.PluginKeys.port
+import com.earldouglas.xsbtwebplugin.WebPlugin.{container, webSettings}
 import scala.io.Codec
 
 

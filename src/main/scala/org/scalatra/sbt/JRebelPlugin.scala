@@ -3,7 +3,7 @@ package org.scalatra.sbt
 import sbt._
 import Keys._
 import sbt.Project.Initialize
-import com.github.siasia.PluginKeys._
+import com.earldouglas.xsbtwebplugin.PluginKeys._
 import io.Codec
 
 object JRebelPlugin {

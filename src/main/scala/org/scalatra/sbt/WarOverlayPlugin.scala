@@ -3,8 +3,8 @@ package org.scalatra.sbt
 import sbt._
 import Keys._
 import Project.Initialize
-import com.github.siasia.PluginKeys._
-import com.github.siasia.WebPlugin._
+import com.earldouglas.xsbtwebplugin.PluginKeys._
+import com.earldouglas.xsbtwebplugin.WebPlugin._
 
 object WarOverlayPlugin extends Plugin {
 
