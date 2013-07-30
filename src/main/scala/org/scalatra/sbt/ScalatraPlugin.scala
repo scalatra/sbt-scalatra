@@ -30,6 +30,8 @@ object ScalatraPlugin extends Plugin {
     browseTask
   )
 
+  val scalatraWithDist: Seq[Project.Setting[_]] = scalatraSettings ++ DistPlugin.distSettings
+
   val scalatraWithJRebel: Seq[Project.Setting[_]] = scalatraSettings ++ JRebelPlugin.jrebelSettings 
 
   val scalatraWithWarOverlays: Seq[Project.Setting[_]] = scalatraSettings ++ WarOverlayPlugin.warOverlaySettings
