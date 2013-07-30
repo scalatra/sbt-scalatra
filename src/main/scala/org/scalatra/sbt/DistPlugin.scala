@@ -59,12 +59,21 @@ object DistPlugin extends Plugin {
     (libFiles filter ClasspathUtilities.isArchive map (_.relativeTo(base))).flatten mkString java.io.File.pathSeparator
   }
 
+  private[this] val webappResources = SettingKey[Seq[File]]("webapp-resources")
+
   private def stageTask: Initialize[Task[Seq[File]]] =
-    (assembleJarsAndClasses in Dist, target in Dist, name in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
+    (webappResources in Compile, excludeFilter in Dist, assembleJarsAndClasses in Dist, target in Dist, name in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (webRes, excl, libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
       val launch = createLauncherScriptTask(tgt, nm, libFiles, mainClass, javaOptions, envExports, s.log)
       val logsDir = tgt / "logs"
       if (!logsDir.exists()) logsDir.mkdirs()
-      libFiles ++ Seq(launch, logsDir)
+
+      val resourceFiles = webRes flatMap { wr =>
+        s.log.info("Adding " + wr + " to dist in " + tgt + "/webapp")
+        val files = wr.descendantsExcept("*", excl)
+        IO.copy(files x rebase(wr, tgt / "webapp"))
+      }
+
+      libFiles ++ Seq(launch, logsDir) ++ resourceFiles
     }
 
   private def distTask: Initialize[Task[File]] =
