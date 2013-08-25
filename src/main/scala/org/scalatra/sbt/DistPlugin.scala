@@ -2,7 +2,7 @@ package org.scalatra.sbt
 
 import _root_.sbt._
 import classpath.ClasspathUtilities
-import Project.Initialize
+import Def.Initialize
 import Keys._
 import Defaults._
 
@@ -24,9 +24,9 @@ object DistPlugin extends Plugin {
     (fullClasspath in Runtime, excludeFilter in Dist, target in Dist) map { (cp, excl, tgt) =>
       IO.delete(tgt)
       val (libs, dirs) = cp.map(_.data).toSeq partition ClasspathUtilities.isArchive
-      val jars = libs.descendantsExcept("*", excl) x flat(tgt / "lib")
+      val jars = libs.descendantsExcept(GlobFilter("*"), excl) x flat(tgt / "lib")
       val classesAndResources = dirs flatMap { dir =>
-        val files = dir.descendantsExcept("*", excl)
+        val files = dir.descendantsExcept(GlobFilter("*"), excl)
         files x rebase(dir, tgt / "lib")
       }
 
@@ -69,7 +69,7 @@ object DistPlugin extends Plugin {
 
       val resourceFiles = webRes flatMap { wr =>
         s.log.info("Adding " + wr + " to dist in " + tgt + "/webapp")
-        val files = wr.descendantsExcept("*", excl)
+        val files = wr.descendantsExcept(GlobFilter("*"), excl)
         IO.copy(files x rebase(wr, tgt / "webapp"))
       }
 

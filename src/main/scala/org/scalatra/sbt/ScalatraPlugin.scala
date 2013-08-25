@@ -20,21 +20,21 @@ object ScalatraPlugin extends Plugin {
       java.awt.Desktop.getDesktop.browse(url)
     }
     catch {
-      case _ => {
+      case _: Throwable => {
         log info { "Could not open browser, sorry. Open manually to %s." format url.toASCIIString }
       }
     }
   }
 
-  val scalatraSettings: Seq[Project.Setting[_]] = webSettings ++ Seq(
+  val scalatraSettings: Seq[Def.Setting[_]] = webSettings ++ Seq(
     browseTask
   )
 
-  val scalatraWithDist: Seq[Project.Setting[_]] = scalatraSettings ++ DistPlugin.distSettings
+  val scalatraWithDist: Seq[Def.Setting[_]] = scalatraSettings ++ DistPlugin.distSettings
 
-  val scalatraWithJRebel: Seq[Project.Setting[_]] = scalatraSettings ++ JRebelPlugin.jrebelSettings 
+  val scalatraWithJRebel: Seq[Def.Setting[_]] = scalatraSettings ++ JRebelPlugin.jrebelSettings 
 
-  val scalatraWithWarOverlays: Seq[Project.Setting[_]] = scalatraSettings ++ WarOverlayPlugin.warOverlaySettings
+  val scalatraWithWarOverlays: Seq[Def.Setting[_]] = scalatraSettings ++ WarOverlayPlugin.warOverlaySettings
 
   val scalatraFullSettings = scalatraSettings ++ JRebelPlugin.jrebelSettings ++ WarOverlayPlugin.warOverlaySettings
 

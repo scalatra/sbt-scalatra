@@ -6,7 +6,7 @@ sbtPlugin := true
 
 publishMavenStyle := false
 
-version := "0.3.1"
+version := "0.3.2"
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
 
@@ -21,4 +21,4 @@ publishTo <<= (version) { version: String =>
    Some(Resolver.url(name, new URL(url))(Resolver.ivyStylePatterns))
 }
 
-addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.3.0")
+addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "0.4.0")

@@ -2,7 +2,7 @@ package org.scalatra.sbt
 
 import sbt._
 import Keys._
-import Project.Initialize
+import Def.Initialize
 import com.earldouglas.xsbtwebplugin.PluginKeys._
 import com.earldouglas.xsbtwebplugin.WebPlugin._
 
