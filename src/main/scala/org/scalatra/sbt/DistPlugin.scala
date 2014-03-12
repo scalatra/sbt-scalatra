@@ -15,6 +15,7 @@ object DistPlugin extends Plugin {
     val memSetting = SettingKey[String]("mem-setting", "The maximium and initial heap size.")
     val permGenSetting = SettingKey[String]("perm-gen-setting", "The PermGen size.")
     val envExports = SettingKey[Seq[String]]("env-exports", "The exports which will be expored in the launcher script.")
+    val scriptName = SettingKey[String]("run-script-name", "The name of the service runscript.")
   }
 
   import DistKeys._
@@ -62,7 +63,7 @@ object DistPlugin extends Plugin {
   private[this] val webappResources = SettingKey[Seq[File]]("webapp-resources")
 
   private def stageTask: Initialize[Task[Seq[File]]] =
-    (webappResources in Compile, excludeFilter in Dist, assembleJarsAndClasses in Dist, target in Dist, name in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (webRes, excl, libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
+    (webappResources in Compile, excludeFilter in Dist, assembleJarsAndClasses in Dist, target in Dist, scriptName in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (webRes, excl, libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
       val launch = createLauncherScriptTask(tgt, nm, libFiles, mainClass, javaOptions, envExports, s.log)
       val logsDir = tgt / "logs"
       if (!logsDir.exists()) logsDir.mkdirs()
@@ -92,6 +93,7 @@ object DistPlugin extends Plugin {
      dist in Dist <<= distTask,
      dist <<= dist in Dist,
      name in Dist <<= name,
+     scriptName in Dist <<= name,
      mainClass in Dist := Some("ScalatraLauncher"),
      memSetting in Dist := "1g",
      permGenSetting in Dist := "128m",
