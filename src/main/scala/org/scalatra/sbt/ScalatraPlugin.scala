@@ -7,11 +7,9 @@ import com.earldouglas.xsbtwebplugin.PluginKeys.port
 import com.earldouglas.xsbtwebplugin.WebPlugin.{container, webSettings}
 import scala.io.Codec
 
-
 object ScalatraPlugin extends Plugin {
   import PluginKeys._
 
-  
   val browseTask = browse <<= (streams, port in container.Configuration) map { (streams, port) =>
     import streams.log
     val url = URI.create("http://localhost:%s" format port)
