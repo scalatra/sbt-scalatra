@@ -25,10 +25,10 @@ object DistPlugin extends Plugin {
     (fullClasspath in Runtime, excludeFilter in Dist, target in Dist) map { (cp, excl, tgt) =>
       IO.delete(tgt)
       val (libs, dirs) = cp.map(_.data).toSeq partition ClasspathUtilities.isArchive
-      val jars = libs.descendantsExcept(GlobFilter("*"), excl) x flat(tgt / "lib")
+      val jars = libs.descendantsExcept(GlobFilter("*"), excl) pair flat(tgt / "lib")
       val classesAndResources = dirs flatMap { dir =>
         val files = dir.descendantsExcept(GlobFilter("*"), excl)
-        files x rebase(dir, tgt / "lib")
+        files pair rebase(dir, tgt / "lib")
       }
 
       (IO.copy(jars) ++ IO.copy(classesAndResources)).toSeq
@@ -71,7 +71,7 @@ object DistPlugin extends Plugin {
       val resourceFiles = webRes flatMap { wr =>
         s.log.info("Adding " + wr + " to dist in " + tgt + "/webapp")
         val files = wr.descendantsExcept(GlobFilter("*"), excl)
-        IO.copy(files x rebase(wr, tgt / "webapp"))
+        IO.copy(files pair rebase(wr, tgt / "webapp"))
       }
 
       libFiles ++ Seq(launch, logsDir) ++ resourceFiles
@@ -80,7 +80,7 @@ object DistPlugin extends Plugin {
   private def distTask: Initialize[Task[File]] =
     (stage in Dist, target in Dist, name in Dist, version in Dist) map { (files, tgt, nm, ver) =>
       val zipFile = tgt / ".." / (nm + "-" + ver + ".zip")
-      val paths = files x rebase(tgt, nm)
+      val paths = files pair rebase(tgt, nm)
       IO.zip(paths, zipFile)
       zipFile
     }
