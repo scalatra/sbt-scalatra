@@ -16,7 +16,6 @@ object WarOverlayPlugin extends Plugin {
   private def overlayWarsTask: Initialize[Task[Seq[File]]] = Def.task {
     val fcp = sbt.Keys.update.value
 
-    // TODO explain problem with target
     val tgt = (webappDest in Compile).value
     val s = streams.value
 

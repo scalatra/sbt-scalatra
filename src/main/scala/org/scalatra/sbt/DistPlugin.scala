@@ -61,8 +61,6 @@ object DistPlugin extends Plugin {
     (libFiles filter ClasspathUtilities.isArchive map (_.relativeTo(base))).flatten mkString java.io.File.pathSeparator
   }
 
-  // private[this] val webappResources = SettingKey[Seq[File]]("webapp-resources")
-
   private def stageTask: Initialize[Task[Seq[File]]] =
     (webappDest in Compile, excludeFilter in Dist, assembleJarsAndClasses in Dist, target in Dist, runScriptName in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (webRes, excl, libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
       val launch = createLauncherScriptTask(tgt, nm, libFiles, mainClass, javaOptions, envExports, s.log)

@@ -3,7 +3,7 @@ lazy val root = (project in file(".")).settings(
   name := "scalatra-sbt",
   sbtPlugin := true,
   publishMavenStyle := false,
-  version := "0.6.0-SNAPSHOT",
+  version := "0.4.0-SNAPSHOT",
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   javacOptions ++= Seq("-target", "1.6", "-source", "1.6"),
   publishTo <<= (version) { version: String =>
@@ -16,6 +16,5 @@ lazy val root = (project in file(".")).settings(
   }
 )
 
-// TODO: xsbt-web-plugin 1.0.0 (incompatible)
 addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "1.0.0")
 
