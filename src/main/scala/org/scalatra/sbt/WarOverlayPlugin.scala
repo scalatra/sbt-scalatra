@@ -16,7 +16,7 @@ object WarOverlayPlugin extends Plugin {
   private def overlayWarsTask: Initialize[Task[Seq[File]]] = Def.task {
     val fcp = sbt.Keys.update.value
 
-    val tgt = (webappDest in Compile).value
+    val tgt = (webappDest in webapp).value
     val s = streams.value
 
     s.log.info("overlaying wars in classpath to " + tgt)

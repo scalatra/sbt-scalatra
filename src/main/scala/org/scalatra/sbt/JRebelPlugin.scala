@@ -13,7 +13,7 @@ object JRebelPlugin {
     val tgt = (resourceManaged in Compile).value
     val src = (crossTarget in Compile).value
     val tst = (crossTarget in Test).value
-    val extra = (webappDest in Compile).value
+    val extra = (webappDest in webapp).value
     val s = streams.value
 
     val content =
