@@ -1,5 +1,7 @@
 package org.scalatra.sbt
 
+import java.util.regex.Pattern
+
 import _root_.sbt._
 import classpath.ClasspathUtilities
 import Def.Initialize
@@ -82,8 +84,21 @@ object DistPlugin extends Plugin {
       zipFile
     }
 
+  private class PatternFileFilter(val pattern: Pattern) extends FileFilter {
+    def accept(file: File): Boolean = {
+      pattern.matcher(file.getCanonicalPath).matches
+    }
+  }
+
+  private object PatternFileFilter {
+    def apply(expression: String): PatternFileFilter = new PatternFileFilter(Pattern.compile(expression))
+  }
+
   val distSettings = Seq(
-     excludeFilter in Dist := HiddenFileFilter,
+     excludeFilter in Dist := {
+       HiddenFileFilter  || PatternFileFilter(".*/WEB-INF/classes") || PatternFileFilter(".*/WEB-INF/lib")
+       // could use (webappDest in webapp).value.getCanonicalPath instead of .*, but webappDest is a task and SBT settings cant depend on tasks
+     },
      target in Dist <<= (target in Compile)(_ / "dist"),
      assembleJarsAndClasses in Dist <<= assembleJarsAndClassesTask,
      stage in Dist <<= stageTask,
