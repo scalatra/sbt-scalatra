@@ -3,7 +3,7 @@ package org.scalatra.sbt
 import sbt._
 import Keys._
 import java.net.URI
-import com.earldouglas.xsbtwebplugin.PluginKeys.port
+import com.earldouglas.xsbtwebplugin.PluginKeys.{port, auxCompile}
 import com.earldouglas.xsbtwebplugin.WebPlugin.{container, webSettings}
 import scala.io.Codec
 
@@ -26,8 +26,15 @@ object ScalatraPlugin extends Plugin {
     }
   }
 
+  val reloader = TaskKey[Unit]("reloader", "Recompiles and reloads the webapp container when your code changes")
+
+  val reloaderTask = reloader := {
+    (copyResources in Compile).value
+    (auxCompile in Compile).value
+  }
+
   val scalatraSettings: Seq[Def.Setting[_]] = webSettings ++ Seq(
-    browseTask
+    browseTask, reloaderTask
   )
 
   val scalatraWithDist: Seq[Def.Setting[_]] = scalatraSettings ++ DistPlugin.distSettings
