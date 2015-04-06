@@ -17,18 +17,14 @@ object JRebelPlugin {
     val s = streams.value
 
     val content =
-      <application
-          xsi:schemaLocation="http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xmlns="http://www.zeroturnaround.com"
-          >
+      <application xsi:schemaLocation="http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com">
         <classpath>
-          <dir name={src.getAbsolutePath + "/classes"} />
-          <dir name={tst.getAbsolutePath + "/test-classes"}></dir>
+          <dir name={ src.getAbsolutePath + "/classes" }/>
+          <dir name={ tst.getAbsolutePath + "/test-classes" }></dir>
         </classpath>
         <web>
           <link>
-            <dir name={extra.getAbsolutePath} />
+            <dir name={ extra.getAbsolutePath }/>
           </link>
         </web>
       </application>.toString()

@@ -37,7 +37,6 @@ object DistPlugin extends Plugin {
       (IO.copy(jars) ++ IO.copy(classesAndResources)).toSeq
     }
 
-
   private def createLauncherScriptTask(base: File, name: String, libFiles: Seq[File], mainClass: Option[String], javaOptions: Seq[String], envExports: Seq[String], logger: Logger): File = {
     val f = base / "bin" / name
     if (!f.getParentFile.exists()) f.getParentFile.mkdirs()
@@ -95,29 +94,29 @@ object DistPlugin extends Plugin {
   }
 
   val distSettings = Seq(
-     excludeFilter in Dist := {
-       HiddenFileFilter  || PatternFileFilter(".*/WEB-INF/classes") || PatternFileFilter(".*/WEB-INF/lib")
-       // could use (webappDest in webapp).value.getCanonicalPath instead of .*, but webappDest is a task and SBT settings cant depend on tasks
-     },
-     target in Dist <<= (target in Compile)(_ / "dist"),
-     assembleJarsAndClasses in Dist <<= assembleJarsAndClassesTask,
-     stage in Dist <<= stageTask,
-     dist in Dist <<= distTask,
-     dist <<= dist in Dist,
-     name in Dist <<= name,
-     runScriptName in Dist <<= name,
-     mainClass in Dist := Some("ScalatraLauncher"),
-     memSetting in Dist := "1g",
-     permGenSetting in Dist := "128m",
-     envExports in Dist := Seq(),
-     javaOptions in Dist <++= (memSetting in Dist, permGenSetting in Dist) map { (mem, perm) =>
+    excludeFilter in Dist := {
+      HiddenFileFilter || PatternFileFilter(".*/WEB-INF/classes") || PatternFileFilter(".*/WEB-INF/lib")
+      // could use (webappDest in webapp).value.getCanonicalPath instead of .*, but webappDest is a task and SBT settings cant depend on tasks
+    },
+    target in Dist <<= (target in Compile)(_ / "dist"),
+    assembleJarsAndClasses in Dist <<= assembleJarsAndClassesTask,
+    stage in Dist <<= stageTask,
+    dist in Dist <<= distTask,
+    dist <<= dist in Dist,
+    name in Dist <<= name,
+    runScriptName in Dist <<= name,
+    mainClass in Dist := Some("ScalatraLauncher"),
+    memSetting in Dist := "1g",
+    permGenSetting in Dist := "128m",
+    envExports in Dist := Seq(),
+    javaOptions in Dist <++= (memSetting in Dist, permGenSetting in Dist) map { (mem, perm) =>
       val rr = Seq(
         "-Xms" + mem,
         "-Xmx" + mem,
-        "-XX:PermSize="+perm,
-        "-XX:MaxPermSize="+perm)
+        "-XX:PermSize=" + perm,
+        "-XX:MaxPermSize=" + perm)
       rr
     }
-   )
+  )
 
 }
