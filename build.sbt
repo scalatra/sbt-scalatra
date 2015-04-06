@@ -14,7 +14,6 @@ lazy val root = (project in file(".")).settings(
      }
      Some(Resolver.url(name, new URL(url))(Resolver.ivyStylePatterns))
   }
-)
+).settings(scalariformSettings: _*)
 
 addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "1.0.0")
-
