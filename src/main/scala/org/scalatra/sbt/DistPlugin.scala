@@ -1,21 +1,24 @@
 package org.scalatra.sbt
 
+import java.util.regex.Pattern
+
 import _root_.sbt._
 import classpath.ClasspathUtilities
 import Def.Initialize
 import Keys._
 import Defaults._
+import com.earldouglas.xwp.XwpPlugin._
 
 object DistPlugin extends Plugin {
 
   object DistKeys {
-    val dist = TaskKey[File]("dist", "Build a distribution, assemble the files, create a launcher and make an archive.")
-    val stage = TaskKey[Seq[File]]("stage", "Build a distribution, assemble the files and create a launcher.")
-    val assembleJarsAndClasses = TaskKey[Seq[File]]("assemble-jars-and-classes", "Assemble jars and classes")
-    val memSetting = SettingKey[String]("mem-setting", "The maximium and initial heap size.")
-    val permGenSetting = SettingKey[String]("perm-gen-setting", "The PermGen size.")
-    val envExports = SettingKey[Seq[String]]("env-exports", "The exports which will be expored in the launcher script.")
-    val scriptName = SettingKey[String]("run-script-name", "The name of the service runscript.")
+    val dist = taskKey[File]("Build a distribution, assemble the files, create a launcher and make an archive.")
+    val stage = taskKey[Seq[File]]("Build a distribution, assemble the files and create a launcher.")
+    val assembleJarsAndClasses = taskKey[Seq[File]]("Assemble jars and classes")
+    val memSetting = settingKey[String]("The maximium and initial heap size.")
+    val permGenSetting = settingKey[String]("The PermGen size.")
+    val envExports = settingKey[Seq[String]]("The exports which will be expored in the launcher script.")
+    val runScriptName = settingKey[String]("The name of the service runscript.")
   }
 
   import DistKeys._
@@ -33,7 +36,6 @@ object DistPlugin extends Plugin {
 
       (IO.copy(jars) ++ IO.copy(classesAndResources)).toSeq
     }
-
 
   private def createLauncherScriptTask(base: File, name: String, libFiles: Seq[File], mainClass: Option[String], javaOptions: Seq[String], envExports: Seq[String], logger: Logger): File = {
     val f = base / "bin" / name
@@ -60,19 +62,15 @@ object DistPlugin extends Plugin {
     (libFiles filter ClasspathUtilities.isArchive map (_.relativeTo(base))).flatten mkString java.io.File.pathSeparator
   }
 
-  private[this] val webappResources = SettingKey[Seq[File]]("webapp-resources")
-
   private def stageTask: Initialize[Task[Seq[File]]] =
-    (webappResources in Compile, excludeFilter in Dist, assembleJarsAndClasses in Dist, target in Dist, scriptName in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (webRes, excl, libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
+    (webappDest in Compile, excludeFilter in Dist, assembleJarsAndClasses in Dist, target in Dist, runScriptName in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (webRes, excl, libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
       val launch = createLauncherScriptTask(tgt, nm, libFiles, mainClass, javaOptions, envExports, s.log)
       val logsDir = tgt / "logs"
       if (!logsDir.exists()) logsDir.mkdirs()
 
-      val resourceFiles = webRes flatMap { wr =>
-        s.log.info("Adding " + wr + " to dist in " + tgt + "/webapp")
-        val files = wr.descendantsExcept(GlobFilter("*"), excl)
-        IO.copy(files pair rebase(wr, tgt / "webapp"))
-      }
+      s.log.info("Adding " + webRes + " to dist in " + tgt + "/webapp")
+      val resourceFilesFinder = webRes.descendantsExcept(GlobFilter("*"), excl)
+      val resourceFiles = IO.copy(resourceFilesFinder pair rebase(webRes, tgt / "webapp"))
 
       libFiles ++ Seq(launch, logsDir) ++ resourceFiles
     }
@@ -85,27 +83,40 @@ object DistPlugin extends Plugin {
       zipFile
     }
 
+  private class PatternFileFilter(val pattern: Pattern) extends FileFilter {
+    def accept(file: File): Boolean = {
+      pattern.matcher(file.getCanonicalPath).matches
+    }
+  }
+
+  private object PatternFileFilter {
+    def apply(expression: String): PatternFileFilter = new PatternFileFilter(Pattern.compile(expression))
+  }
+
   val distSettings = Seq(
-     excludeFilter in Dist := HiddenFileFilter,
-     target in Dist <<= (target in Compile)(_ / "dist"),
-     assembleJarsAndClasses in Dist <<= assembleJarsAndClassesTask,
-     stage in Dist <<= stageTask,
-     dist in Dist <<= distTask,
-     dist <<= dist in Dist,
-     name in Dist <<= name,
-     scriptName in Dist <<= name,
-     mainClass in Dist := Some("ScalatraLauncher"),
-     memSetting in Dist := "1g",
-     permGenSetting in Dist := "128m",
-     envExports in Dist := Seq(),
-     javaOptions in Dist <++= (memSetting in Dist, permGenSetting in Dist) map { (mem, perm) =>
+    excludeFilter in Dist := {
+      HiddenFileFilter || PatternFileFilter(".*/WEB-INF/classes") || PatternFileFilter(".*/WEB-INF/lib")
+      // could use (webappDest in webapp).value.getCanonicalPath instead of .*, but webappDest is a task and SBT settings cant depend on tasks
+    },
+    target in Dist <<= (target in Compile)(_ / "dist"),
+    assembleJarsAndClasses in Dist <<= assembleJarsAndClassesTask,
+    stage in Dist <<= stageTask,
+    dist in Dist <<= distTask,
+    dist <<= dist in Dist,
+    name in Dist <<= name,
+    runScriptName in Dist <<= name,
+    mainClass in Dist := Some("ScalatraLauncher"),
+    memSetting in Dist := "1g",
+    permGenSetting in Dist := "128m",
+    envExports in Dist := Seq(),
+    javaOptions in Dist <++= (memSetting in Dist, permGenSetting in Dist) map { (mem, perm) =>
       val rr = Seq(
         "-Xms" + mem,
         "-Xmx" + mem,
-        "-XX:PermSize="+perm,
-        "-XX:MaxPermSize="+perm)
+        "-XX:PermSize=" + perm,
+        "-XX:MaxPermSize=" + perm)
       rr
     }
-   )
+  )
 
 }
