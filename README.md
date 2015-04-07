@@ -1,6 +1,8 @@
 scalatra-sbt
 ============
 
+[![Build Status](https://travis-ci.org/scalatra/scalatra-sbt.svg)](https://travis-ci.org/scalatra/scalatra-sbt)
+
 An SBT Plugin to for scalatra
 
 
