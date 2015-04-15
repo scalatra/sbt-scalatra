@@ -3,7 +3,7 @@ scalatra-sbt
 
 [![Build Status](https://travis-ci.org/scalatra/scalatra-sbt.svg)](https://travis-ci.org/scalatra/scalatra-sbt)
 
-An sbt Plugin to for scalatra apps.
+An sbt plugin for Scalatra application development.
 
 ```scala
 addSbtPlugin("org.scalatra.sbt" % "scalatra-sbt"    % "0.4.0")
