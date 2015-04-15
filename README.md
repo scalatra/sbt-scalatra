@@ -6,7 +6,8 @@ scalatra-sbt
 An sbt Plugin to for scalatra apps.
 
 ```scala
-addSbtPlugin("org.scalatra.sbt" % "scalatra-sbt" % "0.4.0")
+addSbtPlugin("org.scalatra.sbt" % "scalatra-sbt"    % "0.4.0")
+addSbtPlugin("com.earldouglas"  % "xsbt-web-plugin" % "1.1.0")
 ```
 
 This plugin adds a browse task, to open the current project in a browser. It depends on xsbt-web-plugin so you don't need to specify that explicitly.
