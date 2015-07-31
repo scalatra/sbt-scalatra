@@ -2,7 +2,7 @@ package org.scalatra.sbt
 
 import sbt._
 import Keys._
-import com.earldouglas.xwp.XwpPlugin._
+import com.earldouglas.xwp.WebappPlugin.autoImport._
 import io.Codec
 
 object JRebelPlugin {
@@ -13,7 +13,7 @@ object JRebelPlugin {
     val tgt = (resourceManaged in Compile).value
     val src = (crossTarget in Compile).value
     val tst = (crossTarget in Test).value
-    val extra = (webappDest in webapp).value
+    val extra = (target in webappPrepare).value
     val s = streams.value
 
     val content =
