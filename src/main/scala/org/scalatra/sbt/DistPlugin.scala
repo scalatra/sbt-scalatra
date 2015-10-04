@@ -7,7 +7,7 @@ import classpath.ClasspathUtilities
 import Def.Initialize
 import Keys._
 import Defaults._
-import com.earldouglas.xwp.XwpPlugin._
+import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
 
 object DistPlugin extends Plugin {
 
@@ -63,7 +63,7 @@ object DistPlugin extends Plugin {
   }
 
   private def stageTask: Initialize[Task[Seq[File]]] =
-    (webappDest in Compile, excludeFilter in Dist, assembleJarsAndClasses in Dist, target in Dist, runScriptName in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (webRes, excl, libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
+    (target in webappPrepare, excludeFilter in Dist, assembleJarsAndClasses in Dist, target in Dist, runScriptName in Dist, mainClass in Dist, javaOptions in Dist, envExports in Dist, streams) map { (webRes, excl, libFiles, tgt, nm, mainClass, javaOptions, envExports, s) =>
       val launch = createLauncherScriptTask(tgt, nm, libFiles, mainClass, javaOptions, envExports, s.log)
       val logsDir = tgt / "logs"
       if (!logsDir.exists()) logsDir.mkdirs()

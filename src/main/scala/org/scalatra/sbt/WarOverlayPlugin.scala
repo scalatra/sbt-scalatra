@@ -3,7 +3,9 @@ package org.scalatra.sbt
 import sbt._
 import Keys._
 import Def.Initialize
-import com.earldouglas.xwp.XwpPlugin._
+import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
+import com.earldouglas.xwp.ContainerPlugin.start
+import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
 
 object WarOverlayPlugin extends Plugin {
 
@@ -16,7 +18,7 @@ object WarOverlayPlugin extends Plugin {
   private def overlayWarsTask: Initialize[Task[Seq[File]]] = Def.task {
     val fcp = sbt.Keys.update.value
 
-    val tgt = (webappDest in webapp).value
+    val tgt = (target in webappPrepare).value
     val s = streams.value
 
     s.log.info("overlaying wars in classpath to " + tgt)
@@ -38,7 +40,7 @@ object WarOverlayPlugin extends Plugin {
   val warOverlaySettings: Seq[sbt.Setting[_]] = Seq(
     overlayWars in Compile <<= overlayWarsTask,
     overlayWars <<= (overlayWars in Compile),
-    start in container <<= (start in container).dependsOn(overlayWars in Compile),
-    packageWar in Compile <<= (packageWar in Compile).dependsOn(overlayWars in Compile)
+    start in Jetty <<= (start in Jetty).dependsOn(overlayWars in Compile),
+    sbt.Keys.`package` in Compile <<= (sbt.Keys.`package` in Compile).dependsOn(overlayWars in Compile)
   )
 }
