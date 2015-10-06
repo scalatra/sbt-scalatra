@@ -3,7 +3,7 @@ package org.scalatra.sbt
 import sbt._
 import Keys._
 import java.net.URI
-import com.earldouglas.xwp.XwpPlugin._
+import com.earldouglas.xwp.JettyPlugin.{ projectSettings => jettySettings }
 import scala.io.Codec
 
 object ScalatraPlugin extends Plugin {
@@ -24,7 +24,7 @@ object ScalatraPlugin extends Plugin {
   //    }
   //  }
 
-  val scalatraSettings: Seq[Def.Setting[_]] = jetty()
+  val scalatraSettings: Seq[Def.Setting[_]] = jettySettings
 
   val scalatraWithDist: Seq[Def.Setting[_]] = scalatraSettings ++ DistPlugin.distSettings
 
