@@ -29,7 +29,7 @@ object ScalatraPlugin extends Plugin {
       }
     }
   }
-  val scalatraSettings: Seq[Def.Setting[_]] = jettySettings
+  val scalatraSettings: Seq[Def.Setting[_]] = jettySettings ++ Seq(browseTask)
 
   val scalatraWithDist: Seq[Def.Setting[_]] = scalatraSettings ++ DistPlugin.distSettings
 
