@@ -4,7 +4,7 @@ import sbt._
 import Keys._
 import java.net.URI
 import com.earldouglas.xwp.ContainerPlugin.start
-import com.earldouglas.xwp.ContainerPlugin.autoImport.{Container, containerPort}
+import com.earldouglas.xwp.ContainerPlugin.autoImport.{ Container, containerPort }
 import com.earldouglas.xwp.JettyPlugin.{ projectSettings => jettySettings }
 import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
 
