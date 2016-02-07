@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
   name := "scalatra-sbt",
   sbtPlugin := true,
-  version := "0.5.0",
+  version := "0.5.1",
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   javacOptions ++= Seq("-target", "1.6", "-source", "1.6"),
   publishTo <<= (version) { version: String =>
@@ -37,4 +37,4 @@ lazy val root = (project in file(".")).settings(
   </developers>
 ).settings(scalariformSettings: _*)
 
-addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "2.0.4")
+addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "2.1.0")
