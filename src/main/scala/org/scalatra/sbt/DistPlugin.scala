@@ -46,16 +46,14 @@ object DistPlugin extends Plugin {
   }
 
   private def createScriptString(base: File, name: String, libFiles: Seq[File], mainClass: Option[String], javaOptions: Seq[String], envExports: Seq[String]): String = {
-    """
-|#!/bin/env bash
-|
-|export CLASSPATH="lib:%s"
-|export JAVA_OPTS="%s"
-|%s
-|
-|java $JAVA_OPTS -cp $CLASSPATH %s
-|
-""".stripMargin.format(classPathString(base, libFiles), javaOptions.mkString(" "), envExports.map(e => "export %s".format(e)).mkString("\n"), mainClass.getOrElse(""))
+    """#!/bin/env bash
+      |
+      |export CLASSPATH="lib:%s"
+      |export JAVA_OPTS="%s"
+      |%s
+      |
+      |java $JAVA_OPTS -cp $CLASSPATH %s
+      |""".stripMargin.format(classPathString(base, libFiles), javaOptions.mkString(" "), envExports.map(e => "export %s".format(e)).mkString("\n"), mainClass.getOrElse(""))
   }
 
   private def classPathString(base: File, libFiles: Seq[File]) = {
