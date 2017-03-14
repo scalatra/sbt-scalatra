@@ -34,10 +34,12 @@ object ScalatraPlugin extends Plugin {
   val xwpNotification = inConfig(Container)(Seq(
     start := {
       streams.value.log.error("since xsbt-web-plugin 2.x please use jetty:start instead of container:start, for more information check the docs at https://github.com/earldouglas/xsbt-web-plugin")
-      new Process {
-        override def exitValue() = 0
-        override def destroy() {}
-      }
+      Seq(
+        new Process {
+          override def exitValue() = 0
+          override def destroy() {}
+        }
+      )
     }
   ))
 
