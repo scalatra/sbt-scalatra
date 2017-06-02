@@ -5,8 +5,8 @@ lazy val root = (project in file(".")).settings(
   version := "0.5.1",
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   javacOptions ++= Seq("-target", "1.6", "-source", "1.6"),
-  publishTo <<= (version) { version: String =>
-    if (version.trim.endsWith("SNAPSHOT")) Some(Opts.resolver.sonatypeSnapshots)
+  publishTo := {
+    if (version.value.trim.endsWith("SNAPSHOT")) Some(Opts.resolver.sonatypeSnapshots)
     else Some(Opts.resolver.sonatypeStaging)
   },
   publishMavenStyle := true,
