@@ -131,8 +131,8 @@ object DistPlugin extends Plugin {
     permGenSetting in Dist := "128m",
     envExports in Dist := Seq(),
     javaOptions in Dist ++= {
-      val mem = memSetting in Dist
-      val perm = permGenSetting in Dist
+      val mem = (memSetting in Dist).value
+      val perm = (permGenSetting in Dist).value
       val rr = Seq(
         "-Xms" + mem,
         "-Xmx" + mem,
