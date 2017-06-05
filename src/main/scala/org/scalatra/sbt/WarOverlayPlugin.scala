@@ -38,9 +38,9 @@ object WarOverlayPlugin extends Plugin {
   }
 
   val warOverlaySettings: Seq[sbt.Setting[_]] = Seq(
-    overlayWars in Compile <<= overlayWarsTask,
-    overlayWars <<= (overlayWars in Compile),
-    start in Jetty <<= (start in Jetty).dependsOn(overlayWars in Compile),
-    sbt.Keys.`package` in Compile <<= (sbt.Keys.`package` in Compile).dependsOn(overlayWars in Compile)
+    overlayWars in Compile := overlayWarsTask.value,
+    overlayWars := (overlayWars in Compile).value,
+    start in Jetty := (start in Jetty).dependsOn(overlayWars in Compile).value,
+    sbt.Keys.`package` in Compile := (sbt.Keys.`package` in Compile).dependsOn(overlayWars in Compile).value
   )
 }

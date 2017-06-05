@@ -35,8 +35,8 @@ object JRebelPlugin {
   }
 
   val jrebelSettings: Seq[Def.Setting[_]] = Seq(
-    generateJRebel in Compile <<= generateJRebelXmlTask,
-    generateJRebel <<= generateJRebel in Compile,
-    compile in Compile <<= (compile in Compile).dependsOn(generateJRebel in Compile)
+    generateJRebel in Compile := generateJRebelXmlTask.value,
+    generateJRebel := (generateJRebel in Compile).value,
+    compile in Compile := (compile in Compile).dependsOn(generateJRebel in Compile).value
   )
 }
