@@ -16,6 +16,7 @@ object DistPlugin extends Plugin {
     val stage = taskKey[Seq[File]]("Build a distribution, assemble the files and create a launcher.")
     val assembleJarsAndClasses = taskKey[Seq[File]]("Assemble jars and classes")
     val memSetting = settingKey[String]("The maximium and initial heap size.")
+    @deprecated("there is no effect. will be removed", "")
     val permGenSetting = settingKey[String]("The PermGen size.")
     val envExports = settingKey[Seq[String]]("The exports which will be expored in the launcher script.")
     val runScriptName = settingKey[String]("The name of the service runscript.")
@@ -128,16 +129,12 @@ object DistPlugin extends Plugin {
     runScriptName in Dist := name.value,
     mainClass in Dist := Some("ScalatraLauncher"),
     memSetting in Dist := "1g",
-    permGenSetting in Dist := "128m",
     envExports in Dist := Seq(),
     javaOptions in Dist ++= {
       val mem = (memSetting in Dist).value
-      val perm = (permGenSetting in Dist).value
       val rr = Seq(
         "-Xms" + mem,
-        "-Xmx" + mem,
-        "-XX:PermSize=" + perm,
-        "-XX:MaxPermSize=" + perm)
+        "-Xmx" + mem)
       rr
     }
   )
