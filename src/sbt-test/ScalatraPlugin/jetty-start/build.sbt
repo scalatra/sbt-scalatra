@@ -1,4 +1,3 @@
-
 organization := "org.scalatra"
 name := "scalatra-sbt test"
 version := "0.1.0-SNAPSHOT"
@@ -6,7 +5,7 @@ scalaVersion := "2.12.2"
 
 fork in Test := true
 
-val ScalatraVersion = "2.5.0"
+val ScalatraVersion = "2.5.1"
 
 libraryDependencies ++= Seq(
   "org.scalatra" %% "scalatra" % ScalatraVersion,
