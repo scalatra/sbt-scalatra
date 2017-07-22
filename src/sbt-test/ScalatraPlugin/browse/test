@@ -1,0 +1,12 @@
+# Check if browse command enabled
+> jetty:start
+
+# wait for servlet container to start
+$ sleep 10000
+
+# check if service is mounted
+> browse
+
+$ sleep 10000
+
+> jetty:stop
