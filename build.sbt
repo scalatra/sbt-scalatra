@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
   name := "scalatra-sbt",
   sbtPlugin := true,
-  version := "0.5.1-SNAPSHOT",
+  version := "0.5.1",
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   publishTo := {
     if (version.value.trim.endsWith("SNAPSHOT")) Some(Opts.resolver.sonatypeSnapshots)
