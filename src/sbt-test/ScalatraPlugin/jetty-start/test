@@ -1,4 +1,4 @@
-# check if the file gets created
+# Check if jetty is started or not
 > jetty:start
 
 # wait for servlet container to start
