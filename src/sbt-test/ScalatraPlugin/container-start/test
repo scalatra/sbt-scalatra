@@ -1,0 +1,8 @@
+# Check if the deprecated command fails
+> container:start
+
+# wait for servlet container to start
+$ sleep 10000
+
+# check if service is not mounted
+-> check
