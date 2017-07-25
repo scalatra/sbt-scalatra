@@ -4,7 +4,6 @@ lazy val root = (project in file(".")).settings(
   sbtPlugin := true,
   version := "0.5.1",
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
-  javacOptions ++= Seq("-target", "1.6", "-source", "1.6"),
   publishTo := {
     if (version.value.trim.endsWith("SNAPSHOT")) Some(Opts.resolver.sonatypeSnapshots)
     else Some(Opts.resolver.sonatypeStaging)
@@ -37,10 +36,4 @@ lazy val root = (project in file(".")).settings(
   </developers>
 ).settings(scalariformSettings: _*)
 
-addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "3.0.1")
-
-ScriptedPlugin.scriptedSettings
-scriptedLaunchOpts := { scriptedLaunchOpts.value ++
-  Seq("-Xmx1024M", "-Dplugin.version=" + version.value)
-}
-scriptedBufferLog := false
+addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "3.0.3")
