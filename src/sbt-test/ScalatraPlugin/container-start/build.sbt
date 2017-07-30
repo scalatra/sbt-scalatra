@@ -1,7 +1,7 @@
 organization := "org.scalatra"
 name := "scalatra-sbt-container-start-test"
 version := "0.1.0-SNAPSHOT"
-scalaVersion := "2.12.2"
+scalaVersion := "2.12.3"
 
 fork in Test := true
 
