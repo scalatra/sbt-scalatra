@@ -1,12 +1,7 @@
-import org.scalatra.sbt._
-import org.scalatra.sbt.PluginKeys._
-
 organization := "org.scalatra"
 name := "scalatra-sbt-browse-test"
 version := "0.1.0-SNAPSHOT"
-scalaVersion := "2.12.2"
-
-ScalatraPlugin.scalatraSettings
+scalaVersion := "2.12.3"
 
 fork in Test := true
 
@@ -18,7 +13,7 @@ libraryDependencies ++= Seq(
   "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
 )
 
-enablePlugins(JettyPlugin)
+enablePlugins(ScalatraPlugin)
 
 containerPort in Jetty := 8090
 

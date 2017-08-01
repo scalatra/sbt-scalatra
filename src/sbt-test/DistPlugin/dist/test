@@ -1,0 +1,5 @@
+# Testing distribution creation
+
+> dist
+
+$ exists target/scalatra-sbt-dist-test-0.1.0-SNAPSHOT.zip
