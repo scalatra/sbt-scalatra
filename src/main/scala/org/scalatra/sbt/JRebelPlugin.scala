@@ -5,9 +5,11 @@ import Keys._
 import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
 import io.Codec
 
-object JRebelPlugin {
+object JRebelPlugin extends AutoPlugin {
 
-  import PluginKeys._
+  val autoImport = PluginKeys
+
+  import autoImport._
 
   private def generateJRebelXmlTask: sbt.Def.Initialize[Task[Unit]] = Def.task {
     val tgt = (resourceManaged in Compile).value
@@ -39,4 +41,6 @@ object JRebelPlugin {
     generateJRebel := (generateJRebel in Compile).value,
     compile in Compile := (compile in Compile).dependsOn(generateJRebel in Compile).value
   )
+
+  override lazy val projectSettings = jrebelSettings
 }

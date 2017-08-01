@@ -5,11 +5,17 @@ import Keys._
 import java.net.URI
 import com.earldouglas.xwp.ContainerPlugin.start
 import com.earldouglas.xwp.ContainerPlugin.autoImport.{ Container, containerPort }
+import com.earldouglas.xwp.JettyPlugin
 import com.earldouglas.xwp.JettyPlugin.{ projectSettings => jettySettings }
 import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
 
-object ScalatraPlugin extends Plugin {
-  import PluginKeys._
+object ScalatraPlugin extends AutoPlugin {
+  override def requires = JettyPlugin
+  override def trigger  = allRequirements
+
+  val autoImport = PluginKeys
+
+  import autoImport._
 
   val browseTask = browse := {
     val log = streams.value.log
@@ -53,4 +59,5 @@ object ScalatraPlugin extends Plugin {
 
   val scalatraFullSettings = scalatraSettings ++ JRebelPlugin.jrebelSettings ++ WarOverlayPlugin.warOverlaySettings
 
+  override lazy val projectSettings = scalatraSettings
 }

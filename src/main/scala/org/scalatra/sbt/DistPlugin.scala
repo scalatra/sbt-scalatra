@@ -9,7 +9,7 @@ import Keys._
 import Defaults._
 import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
 
-object DistPlugin extends Plugin {
+object DistPlugin extends AutoPlugin {
 
   object DistKeys {
     val dist = taskKey[File]("Build a distribution, assemble the files, create a launcher and make an archive.")
@@ -22,7 +22,9 @@ object DistPlugin extends Plugin {
     val runScriptName = settingKey[String]("The name of the service runscript.")
   }
 
-  import DistKeys._
+  val autoImport = DistKeys
+  import autoImport._
+
   val Dist = config("dist")
 
   private def assembleJarsAndClassesTask: Initialize[Task[Seq[File]]] = {
@@ -139,4 +141,5 @@ object DistPlugin extends Plugin {
     }
   )
 
+  override lazy val projectSettings = distSettings
 }

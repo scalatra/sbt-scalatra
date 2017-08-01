@@ -5,15 +5,20 @@ import Keys._
 import Def.Initialize
 import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
 import com.earldouglas.xwp.ContainerPlugin.start
+import com.earldouglas.xwp.JettyPlugin
 import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
 
-object WarOverlayPlugin extends Plugin {
+object WarOverlayPlugin extends AutoPlugin {
+  override def requires = JettyPlugin
+  override def trigger  = allRequirements
 
   object Keys {
     val overlayWars = taskKey[Seq[File]]("Import the files from referenced wars")
   }
 
-  import Keys._
+  val autoImport = Keys
+
+  import autoImport._
 
   private def overlayWarsTask: Initialize[Task[Seq[File]]] = Def.task {
     val fcp = sbt.Keys.update.value
@@ -43,4 +48,6 @@ object WarOverlayPlugin extends Plugin {
     start in Jetty := (start in Jetty).dependsOn(overlayWars in Compile).value,
     sbt.Keys.`package` in Compile := (sbt.Keys.`package` in Compile).dependsOn(overlayWars in Compile).value
   )
+
+  override lazy val projectSettings = warOverlaySettings
 }
