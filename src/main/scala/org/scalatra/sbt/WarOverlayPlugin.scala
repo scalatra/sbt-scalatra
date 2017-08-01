@@ -7,7 +7,7 @@ import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
 import com.earldouglas.xwp.ContainerPlugin.start
 import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
 
-object WarOverlayPlugin extends Plugin {
+object WarOverlayPlugin extends AutoPlugin {
 
   object Keys {
     val overlayWars = taskKey[Seq[File]]("Import the files from referenced wars")

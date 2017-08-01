@@ -5,7 +5,11 @@ import Keys._
 import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
 import io.Codec
 
-object JRebelPlugin {
+object JRebelPlugin extends AutoPlugin {
+
+  def autoImport {
+    import PluginKeys._
+  }
 
   import PluginKeys._
 
@@ -39,4 +43,6 @@ object JRebelPlugin {
     generateJRebel := (generateJRebel in Compile).value,
     compile in Compile := (compile in Compile).dependsOn(generateJRebel in Compile).value
   )
+
+  override lazy val projectSettings = jrebelSettings
 }
