@@ -36,4 +36,4 @@ lazy val root = (project in file(".")).settings(
   </developers>
 ).settings(scalariformSettings: _*)
 
-addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "3.0.3")
+addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "4.0.0")
