@@ -10,7 +10,6 @@ import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
 
 object WarOverlayPlugin extends AutoPlugin {
   override def requires = JettyPlugin
-  override def trigger  = allRequirements
 
   object Keys {
     val overlayWars = taskKey[Seq[File]]("Import the files from referenced wars")
