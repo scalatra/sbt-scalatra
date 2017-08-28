@@ -78,3 +78,6 @@ enablePlugins(DistPlugin)
 
 Execute the task as follows with the sbt shell, distribution file (zip) will be created.
 
+```
+> dist
+```
