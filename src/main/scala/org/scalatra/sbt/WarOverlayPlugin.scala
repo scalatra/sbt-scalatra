@@ -28,10 +28,10 @@ object WarOverlayPlugin extends AutoPlugin {
 
     s.log.info("overlaying wars in classpath to " + tgt)
     if (!tgt.exists()) tgt.mkdirs()
-    val mods = fcp.configuration(Compile.name).map(_.modules).getOrElse(Seq.empty)
+    val mods = Compat.compileModules(fcp).getOrElse(Seq.empty)
     val wars = (mods map { r =>
       r.artifacts collect {
-        case (Artifact(_, "war", "war", _, _, _, _), f) => f
+        case (a:Artifact, f) if (a.`type` == "war" && a.extension == "war") => f
       }
     }).flatten.distinct
 

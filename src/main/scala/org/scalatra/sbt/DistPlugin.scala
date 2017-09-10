@@ -3,7 +3,6 @@ package org.scalatra.sbt
 import java.util.regex.Pattern
 
 import _root_.sbt._
-import classpath.ClasspathUtilities
 import Def.Initialize
 import Keys._
 import Defaults._
@@ -34,11 +33,11 @@ object DistPlugin extends AutoPlugin {
 
     Def.task {
       IO.delete(tgt.value)
-      val (libs, dirs) = cp.value.files partition ClasspathUtilities.isArchive
-      val jars = libs.descendantsExcept(GlobFilter("*"), excl.value) pair flat(tgt.value / "lib")
+      val (libs, dirs) = cp.value.files partition Compat.ClasspathUtilities.isArchive
+      val jars = libs.descendantsExcept(GlobFilter("*"), excl.value) pair Path.flat(tgt.value / "lib")
       val classesAndResources = dirs flatMap { dir =>
         val files = dir.descendantsExcept(GlobFilter("*"), excl.value)
-        files pair rebase(dir, tgt.value / "lib")
+        files pair Path.rebase(dir, tgt.value / "lib")
       }
 
       (IO.copy(jars) ++ IO.copy(classesAndResources)).toSeq
@@ -49,7 +48,7 @@ object DistPlugin extends AutoPlugin {
     val f = base / "bin" / name
     if (!f.getParentFile.exists()) f.getParentFile.mkdirs()
     IO.write(f, createScriptString(base, name, libFiles, mainClass, javaOptions, envExports))
-    "chmod +x %s".format(f.getAbsolutePath) ! logger
+    Compat.executeProccess("chmod +x %s".format(f.getAbsolutePath), logger)
     f
   }
 
@@ -65,7 +64,7 @@ object DistPlugin extends AutoPlugin {
   }
 
   private def classPathString(base: File, libFiles: Seq[File]) = {
-    (libFiles filter ClasspathUtilities.isArchive map (_.relativeTo(base))).flatten mkString java.io.File.pathSeparator
+    (libFiles filter Compat.ClasspathUtilities.isArchive map (_.relativeTo(base))).flatten mkString java.io.File.pathSeparator
   }
 
   private def stageTask: Initialize[Task[Seq[File]]] = {
@@ -86,7 +85,7 @@ object DistPlugin extends AutoPlugin {
 
       s.value.log.info("Adding " + webRes.value + " to dist in " + tgt.value + "/webapp")
       val resourceFilesFinder = webRes.value.descendantsExcept(GlobFilter("*"), excl.value)
-      val resourceFiles = IO.copy(resourceFilesFinder pair rebase(webRes.value, tgt.value / "webapp"))
+      val resourceFiles = IO.copy(resourceFilesFinder pair Path.rebase(webRes.value, tgt.value / "webapp"))
 
       libFiles.value ++ Seq(launch, logsDir) ++ resourceFiles
     }
@@ -100,7 +99,7 @@ object DistPlugin extends AutoPlugin {
 
     Def.task {
       val zipFile = tgt.value / ".." / (nm.value + "-" + ver.value + ".zip")
-      val paths = files.value pair rebase(tgt.value, nm.value)
+      val paths = files.value pair Path.rebase(tgt.value, nm.value)
 
       IO.zip(paths, zipFile)
       zipFile

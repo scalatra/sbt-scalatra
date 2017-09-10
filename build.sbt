@@ -2,8 +2,16 @@ lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
   name := "scalatra-sbt",
   sbtPlugin := true,
-  version := "0.6.0-SNAPSHOT",
+  version := "1.0.0-SNAPSHOT",
+  crossSbtVersions := Seq("0.13.16", "1.0.1"),
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
+  libraryDependencies += {
+    Defaults.sbtPluginExtra(
+      "com.earldouglas" % "xsbt-web-plugin" % "4.0.0",
+      (sbtBinaryVersion in pluginCrossBuild).value,
+      (scalaBinaryVersion in pluginCrossBuild).value
+    )
+  },
   publishTo := {
     if (version.value.trim.endsWith("SNAPSHOT")) Some(Opts.resolver.sonatypeSnapshots)
     else Some(Opts.resolver.sonatypeStaging)
@@ -35,5 +43,3 @@ lazy val root = (project in file(".")).settings(
     </developer>
   </developers>
 ).settings(scalariformSettings: _*)
-
-addSbtPlugin("com.earldouglas" % "xsbt-web-plugin" % "4.0.0")
