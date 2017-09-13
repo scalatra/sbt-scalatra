@@ -3,7 +3,7 @@ package org.scalatra.sbt
 import sbt._
 import Keys._
 import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
-import io.Codec
+import scala.io.Codec
 
 object JRebelPlugin extends AutoPlugin {
 
