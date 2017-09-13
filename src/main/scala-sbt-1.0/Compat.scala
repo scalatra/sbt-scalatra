@@ -14,7 +14,7 @@ object Compat {
   def createProcess: com.earldouglas.xwp.Compat.Process = {
     new com.earldouglas.xwp.Compat.Process {
       override def exitValue() = 0
-      override def destroy() {}
+      override def destroy() = {}
       override def isAlive() = false
     }
   }
