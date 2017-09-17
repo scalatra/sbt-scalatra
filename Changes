@@ -1,0 +1,5 @@
+1.0.0 2017-09-17
+  - AutoPlugin compatible
+  - sbt 1.x compatible
+  - removed WarOverlayPlugin
+    Because the frequency of use is low

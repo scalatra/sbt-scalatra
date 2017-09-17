@@ -8,7 +8,7 @@ An sbt plugins set for Scalatra application development.
 Add the plugin in `project/plugins.sbt`
 
 ```scala
-addSbtPlugin("org.scalatra.sbt" % "scalatra-sbt" % "0.6.0-SNAPSHOT")
+addSbtPlugin("org.scalatra.sbt" % "scalatra-sbt" % "1.0.0")
 ```
 
 ## ScalatraPlugin
@@ -78,3 +78,6 @@ enablePlugins(DistPlugin)
 
 Execute the task as follows with the sbt shell, distribution file (zip) will be created.
 
+```
+> dist
+```
