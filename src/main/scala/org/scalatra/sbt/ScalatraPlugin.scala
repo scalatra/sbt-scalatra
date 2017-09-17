@@ -11,7 +11,6 @@ import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
 
 object ScalatraPlugin extends AutoPlugin {
   override def requires = JettyPlugin
-  override def trigger  = allRequirements
 
   val autoImport = PluginKeys
 
