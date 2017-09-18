@@ -1,5 +1,5 @@
 organization := "org.scalatra"
-name := "scalatra-sbt-jetty-start-test"
+name := "sbt-scalatra-jetty-start-test"
 version := "0.1.0-SNAPSHOT"
 scalaVersion := "2.12.2"
 

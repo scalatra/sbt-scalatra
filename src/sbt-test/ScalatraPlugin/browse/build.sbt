@@ -1,5 +1,5 @@
 organization := "org.scalatra"
-name := "scalatra-sbt-browse-test"
+name := "sbt-scalatra-browse-test"
 version := "0.1.0-SNAPSHOT"
 scalaVersion := "2.12.3"
 

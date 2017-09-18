@@ -1,5 +1,5 @@
 organization := "org.scalatra"
-name := "scalatra-sbt-jrebel-test"
+name := "sbt-scalatra-jrebel-test"
 version := "0.1.0-SNAPSHOT"
 scalaVersion := "2.12.2"
 

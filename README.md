@@ -1,4 +1,4 @@
-scalatra-sbt
+sbt-scalatra
 ============
 
 [![Build Status](https://travis-ci.org/scalatra/scalatra-sbt.svg)](https://travis-ci.org/scalatra/scalatra-sbt)
@@ -8,7 +8,7 @@ An sbt plugins set for Scalatra application development.
 Add the plugin in `project/plugins.sbt`
 
 ```scala
-addSbtPlugin("org.scalatra.sbt" % "scalatra-sbt" % "1.0.0")
+addSbtPlugin("org.scalatra.sbt" % "sbt-scalatra" % "1.0.0")
 ```
 
 ## ScalatraPlugin

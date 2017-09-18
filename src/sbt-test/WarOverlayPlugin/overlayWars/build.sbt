@@ -1,5 +1,5 @@
 organization := "org.scalatra"
-name := "scalatra-sbt-overlaywars-test"
+name := "sbt-scalatra-overlaywars-test"
 version := "0.1.0-SNAPSHOT"
 scalaVersion := "2.12.2"
 
