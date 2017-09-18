@@ -8,7 +8,7 @@ object Compat {
   val ClasspathUtilities = internal.inc.classpath.ClasspathUtilities
 
   def compileModules(m: UpdateReport): Option[Seq[sbt.ModuleReport]] = {
-     m.configuration(Compile).map(_.modules)
+    m.configuration(Compile).map(_.modules)
   }
 
   def createProcess: com.earldouglas.xwp.Compat.Process = {

@@ -135,7 +135,8 @@ object DistPlugin extends AutoPlugin {
       val mem = (memSetting in Dist).value
       val rr = Seq(
         "-Xms" + mem,
-        "-Xmx" + mem)
+        "-Xmx" + mem
+      )
       rr
     }
   )
