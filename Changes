@@ -1,3 +1,7 @@
 1.0.0 2017-09-17
   - AutoPlugin compatible
   - sbt 1.x compatible
+  - Removed WarOverlay Plugin
+    Because it seems that it is better to separate it from sbt-scalatra
+    from an aspect of maintainability, rather than a function unique to
+    Scalatra, and make it an independent plugin.
