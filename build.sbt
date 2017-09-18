@@ -1,6 +1,6 @@
 lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
-  name := "scalatra-sbt",
+  name := "sbt-scalatra",
   sbtPlugin := true,
   version := "1.0.0",
   crossSbtVersions := Seq("0.13.16", "1.0.2"),
