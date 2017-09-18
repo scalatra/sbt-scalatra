@@ -5,5 +5,5 @@ jdk:
   - oraclejdk8
 
 script:
-   - sbt scripted
+   - sbt ^scripted
 

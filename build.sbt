@@ -21,17 +21,17 @@ lazy val root = (project in file(".")).settings(
   },
   publishMavenStyle := true,
   pomIncludeRepository := { x => false },
-  pomExtra := <url>https://github.com/scalatra/scalatra-sbt/</url>
+  pomExtra := <url>https://github.com/scalatra/sbt-scalatra/</url>
   <licenses>
     <license>
       <name>BSD License</name>
-      <url>https://github.com/scalatra/scalatra-sbt/blob/master/LICENSE</url>
+      <url>https://github.com/scalatra/sbt-scalatra/blob/master/LICENSE</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
   <scm>
-    <url>git@github.com:scalatra/scalatra-sbt.git</url>
-    <connection>scm:git:git@github.com:scalatra/scalatra-sbt.git</connection>
+    <url>git@github.com:scalatra/sbt-scalatra.git</url>
+    <connection>scm:git:git@github.com:scalatra/sbt-scalatra.git</connection>
   </scm>
   <developers>
     <developer>

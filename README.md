@@ -1,7 +1,7 @@
 sbt-scalatra
 ============
 
-[![Build Status](https://travis-ci.org/scalatra/scalatra-sbt.svg)](https://travis-ci.org/scalatra/scalatra-sbt)
+[![Build Status](https://travis-ci.org/scalatra/sbt-scalatra.svg)](https://travis-ci.org/scalatra/sbt-scalatra)
 
 An sbt plugins set for Scalatra application development.
 
