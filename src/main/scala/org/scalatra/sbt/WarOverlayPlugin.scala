@@ -30,7 +30,7 @@ object WarOverlayPlugin extends AutoPlugin {
     val mods = Compat.compileModules(fcp).getOrElse(Seq.empty)
     val wars = (mods map { r =>
       r.artifacts collect {
-        case (a:Artifact, f) if (a.`type` == "war" && a.extension == "war") => f
+        case (a: Artifact, f) if (a.`type` == "war" && a.extension == "war") => f
       }
     }).flatten.distinct
 

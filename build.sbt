@@ -1,3 +1,6 @@
+import com.typesafe.sbt.SbtScalariform.ScalariformKeys
+import scalariform.formatter.preferences._
+
 lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
   name := "scalatra-sbt",
@@ -42,4 +45,9 @@ lazy val root = (project in file(".")).settings(
       <url>http://git.io/sera</url>
     </developer>
   </developers>
-).settings(scalariformSettings: _*)
+)
+
+val preferences =
+  ScalariformKeys.preferences := ScalariformKeys.preferences.value
+    .setPreference(DanglingCloseParenthesis, Force)
+Seq(preferences)
