@@ -5,12 +5,12 @@ lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
   name := "sbt-scalatra",
   sbtPlugin := true,
-  version := "1.0.0",
+  version := "1.0.1",
   crossSbtVersions := Seq("0.13.16", "1.0.2"),
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   libraryDependencies += {
     Defaults.sbtPluginExtra(
-      "com.earldouglas" % "xsbt-web-plugin" % "4.0.0",
+      "com.earldouglas" % "xsbt-web-plugin" % "4.0.1",
       (sbtBinaryVersion in pluginCrossBuild).value,
       (scalaBinaryVersion in pluginCrossBuild).value
     )
