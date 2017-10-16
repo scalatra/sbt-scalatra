@@ -1,4 +1,3 @@
-import com.typesafe.sbt.SbtScalariform.ScalariformKeys
 import scalariform.formatter.preferences._
 
 lazy val root = (project in file(".")).settings(
@@ -47,7 +46,5 @@ lazy val root = (project in file(".")).settings(
   </developers>
 )
 
-val preferences =
-  ScalariformKeys.preferences := ScalariformKeys.preferences.value
-    .setPreference(DanglingCloseParenthesis, Force)
-Seq(preferences)
+scalariformPreferences := scalariformPreferences.value
+  .setPreference(DanglingCloseParenthesis, Force)
