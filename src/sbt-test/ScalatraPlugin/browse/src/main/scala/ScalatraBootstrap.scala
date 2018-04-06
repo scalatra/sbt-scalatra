@@ -4,7 +4,7 @@ import javax.servlet.ServletContext
 
 class ScalatraBootstrap extends LifeCycle {
 
-  override def init(context: ServletContext) {
+  override def init(context: ServletContext): Unit = {
 
     val app = new ScalatraServlet {
 
