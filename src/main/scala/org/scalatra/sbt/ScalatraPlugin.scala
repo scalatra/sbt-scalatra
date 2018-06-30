@@ -47,9 +47,5 @@ object ScalatraPlugin extends AutoPlugin {
 
   val scalatraWithDist: Seq[Def.Setting[_]] = scalatraSettings ++ DistPlugin.distSettings
 
-  val scalatraWithJRebel: Seq[Def.Setting[_]] = scalatraSettings ++ JRebelPlugin.jrebelSettings
-
-  val scalatraFullSettings = scalatraSettings ++ JRebelPlugin.jrebelSettings
-
   override lazy val projectSettings = scalatraSettings
 }
