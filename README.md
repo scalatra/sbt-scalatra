@@ -8,7 +8,7 @@ An sbt plugins set for Scalatra application development.
 Add the plugin in `project/plugins.sbt`
 
 ```scala
-addSbtPlugin("org.scalatra.sbt" % "sbt-scalatra" % "1.0.2")
+addSbtPlugin("org.scalatra.sbt" % "sbt-scalatra" % "1.0.3")
 ```
 
 ## ScalatraPlugin
@@ -29,22 +29,6 @@ Execute the `browse` task from sbt shell, the browser starts up.
 > jetty:start
 > browse
 > jetty:stop
-```
-
-## JRebelPlugin
-
-JRebelPlugin generates a `rebel.xml` file for your project so you can use scalatra with jrebel.
-
-### usage
-
-```scala
-enablePlugins(JRebelPlugin)
-```
-
-Execute the `generateJRebel` task from sbt shell, the `rebel.xml` will be created to target directory.
-
-```
-> generateJRebel
 ```
 
 ## DistPlugin

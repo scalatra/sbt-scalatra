@@ -1,3 +1,8 @@
+1.0.3 2018-06-30
+  - Deleted JRebelPlugin
+    Because myJRebel will stop on July 5, 2018 and
+    can not maintain the JRebelPlugin without purchasing a license.
+
 1.0.2 2018-03-08
   - Update xsbt-web-plugin
     from 4.0.1 to 4.0.2
