@@ -2,7 +2,7 @@ language: scala
 scala: 2.10.4
 sudo: false
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 script:
    - sbt scripted
