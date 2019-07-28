@@ -5,7 +5,7 @@ lazy val root = (project in file(".")).settings(
   name := "sbt-scalatra",
   sbtPlugin := true,
   version := "1.0.3",
-  crossSbtVersions := Seq("0.13.17", "1.1.1"),
+  crossSbtVersions := Seq("0.13.18", "1.2.8"),
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   libraryDependencies += {
     Defaults.sbtPluginExtra(
@@ -48,3 +48,10 @@ lazy val root = (project in file(".")).settings(
 
 scalariformPreferences := scalariformPreferences.value
   .setPreference(DanglingCloseParenthesis, Force)
+
+enablePlugins(ScriptedPlugin)
+
+scriptedLaunchOpts ++= Seq(
+  "scalatra_version" -> "2.7.0-RC1",
+  "scala_version" -> "2.12.8",
+).map{ case (k, v) => s"-D$k=$v" }

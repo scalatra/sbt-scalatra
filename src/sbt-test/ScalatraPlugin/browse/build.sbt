@@ -1,11 +1,11 @@
 organization := "org.scalatra"
 name := "sbt-scalatra-browse-test"
 version := "0.1.0-SNAPSHOT"
-scalaVersion := "2.12.3"
+scalaVersion := sys.props("scala_version")
 
 fork in Test := true
 
-val ScalatraVersion = "2.5.1"
+val ScalatraVersion = sys.props("scalatra_version")
 
 libraryDependencies ++= Seq(
   "org.scalatra" %% "scalatra" % ScalatraVersion,
