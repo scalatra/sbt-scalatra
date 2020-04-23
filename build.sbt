@@ -9,7 +9,7 @@ lazy val root = (project in file(".")).settings(
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   libraryDependencies += {
     Defaults.sbtPluginExtra(
-      "com.earldouglas" % "xsbt-web-plugin" % "4.0.2",
+      "com.earldouglas" % "xsbt-web-plugin" % "4.2.0",
       (sbtBinaryVersion in pluginCrossBuild).value,
       (scalaBinaryVersion in pluginCrossBuild).value
     )
@@ -52,6 +52,6 @@ scalariformPreferences := scalariformPreferences.value
 enablePlugins(ScriptedPlugin)
 
 scriptedLaunchOpts ++= Seq(
-  "scalatra_version" -> "2.7.0-RC1",
-  "scala_version" -> "2.12.8",
+  "scalatra_version" -> "2.7.0",
+  "scala_version" -> "2.12.10",
 ).map{ case (k, v) => s"-D$k=$v" }
