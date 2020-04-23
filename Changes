@@ -1,3 +1,8 @@
+1.0.4 2020-04-24
+  - Upgrade Scalatra 2.7.0
+  - Update xsbt-web-plugin
+    from 4.0.2 to 4.2.0
+
 1.0.3 2018-06-30
   - Deleted JRebelPlugin
     Because myJRebel will stop on July 5, 2018 and
