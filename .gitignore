@@ -1,6 +1,12 @@
 *.class
 *.log
 
+# vim specific
+.swp
+
+# macOS specific
+.DS_Store
+
 # sbt specific
 dist/*
 target/
@@ -14,3 +20,4 @@ project/plugins/project/
 
 .idea
 .idea_modules
+.bsp
