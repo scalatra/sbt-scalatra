@@ -3,8 +3,7 @@ package org.scalatra.sbt
 import sbt._
 import Keys._
 import java.net.URI
-import com.earldouglas.xwp.ContainerPlugin.start
-import com.earldouglas.xwp.ContainerPlugin.autoImport.{ Container, containerPort }
+import com.earldouglas.xwp.ContainerPlugin.autoImport.containerPort
 import com.earldouglas.xwp.JettyPlugin
 import com.earldouglas.xwp.JettyPlugin.{ projectSettings => jettySettings }
 import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
@@ -36,14 +35,7 @@ object ScalatraPlugin extends AutoPlugin {
     }
   }
 
-  val xwpNotification = inConfig(Container)(Seq(
-    start := {
-      streams.value.log.error("since xsbt-web-plugin 2.x please use jetty:start instead of container:start, for more information check the docs at https://github.com/earldouglas/xsbt-web-plugin")
-      Seq(Compat.createProcess)
-    }
-  ))
-
-  val scalatraSettings: Seq[Def.Setting[_]] = jettySettings ++ Seq(browseTask) ++ xwpNotification
+  val scalatraSettings: Seq[Def.Setting[_]] = jettySettings ++ Seq(browseTask)
 
   val scalatraWithDist: Seq[Def.Setting[_]] = scalatraSettings ++ DistPlugin.distSettings
 
