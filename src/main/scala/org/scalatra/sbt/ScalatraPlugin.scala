@@ -20,7 +20,7 @@ object ScalatraPlugin extends AutoPlugin {
 
     // read port for jetty, default to 8080
     val port = {
-      val p = (containerPort in Jetty).value
+      val p = (Jetty / containerPort).value
       if (p == -1) 8080 else p
     }
 

@@ -27,9 +27,9 @@ object DistPlugin extends AutoPlugin {
   val Dist = config("dist")
 
   private def assembleJarsAndClassesTask: Initialize[Task[Seq[File]]] = {
-    val cp = fullClasspath in Runtime
-    val excl = excludeFilter in Dist
-    val tgt = target in Dist
+    val cp = Runtime / fullClasspath
+    val excl = Dist / excludeFilter
+    val tgt = Dist / target
 
     Def.task {
       IO.delete(tgt.value)
@@ -68,14 +68,14 @@ object DistPlugin extends AutoPlugin {
   }
 
   private def stageTask: Initialize[Task[Seq[File]]] = {
-    val webRes = target in webappPrepare
-    val excl = excludeFilter in Dist
-    val libFiles = assembleJarsAndClasses in Dist
-    val tgt = target in Dist
-    val nm = runScriptName in Dist
-    val mc = mainClass in Dist
-    val jo = javaOptions in Dist
-    val ee = envExports in Dist
+    val webRes = webappPrepare / target
+    val excl = Dist / excludeFilter
+    val libFiles = Dist / assembleJarsAndClasses
+    val tgt = Dist / target
+    val nm = Dist / runScriptName
+    val mc = Dist / mainClass
+    val jo = Dist / javaOptions
+    val ee = Dist / envExports
     val s = streams
 
     Def.task {
@@ -92,10 +92,10 @@ object DistPlugin extends AutoPlugin {
   }
 
   private def distTask: Initialize[Task[File]] = {
-    val files = stage in Dist
-    val tgt = target in Dist
-    val nm = name in Dist
-    val ver = version in Dist
+    val files = Dist / stage
+    val tgt = Dist / target
+    val nm = Dist / name
+    val ver = Dist / version
 
     Def.task {
       val zipFile = tgt.value / ".." / (nm.value + "-" + ver.value + ".zip")
@@ -117,22 +117,22 @@ object DistPlugin extends AutoPlugin {
   }
 
   val distSettings = Seq(
-    excludeFilter in Dist := {
+    Dist / excludeFilter := {
       HiddenFileFilter || PatternFileFilter(".*/WEB-INF/classes") || PatternFileFilter(".*/WEB-INF/lib")
       // could use (webappDest in webapp).value.getCanonicalPath instead of .*, but webappDest is a task and SBT settings cant depend on tasks
     },
-    target in Dist := (target in Compile)(_ / "dist").value,
-    assembleJarsAndClasses in Dist := assembleJarsAndClassesTask.value,
-    stage in Dist := stageTask.value,
-    dist in Dist := distTask.value,
-    dist := (dist in Dist).value,
-    name in Dist := name.value,
-    runScriptName in Dist := name.value,
-    mainClass in Dist := Some("ScalatraLauncher"),
-    memSetting in Dist := "1g",
-    envExports in Dist := Seq(),
-    javaOptions in Dist ++= {
-      val mem = (memSetting in Dist).value
+    Dist / target := (Compile / target)(_ / "dist").value,
+    Dist / assembleJarsAndClasses := assembleJarsAndClassesTask.value,
+    Dist / stage := stageTask.value,
+    Dist / dist := distTask.value,
+    dist := (Dist / dist).value,
+    Dist / name := name.value,
+    Dist / runScriptName := name.value,
+    Dist / mainClass := Some("ScalatraLauncher"),
+    Dist / memSetting := "1g",
+    Dist / envExports := Seq(),
+    Dist / javaOptions ++= {
+      val mem = (Dist / memSetting).value
       val rr = Seq(
         "-Xms" + mem,
         "-Xmx" + mem
