@@ -3,7 +3,7 @@ name := "sbt-scalatra-dist-test"
 version := "0.1.0-SNAPSHOT"
 scalaVersion := sys.props("scala_version")
 
-fork in Test := true
+Test / fork := true
 
 val ScalatraVersion = sys.props("scalatra_version")
 
