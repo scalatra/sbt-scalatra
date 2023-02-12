@@ -3,7 +3,7 @@ name := "sbt-scalatra-jetty-start-test"
 version := "0.1.0-SNAPSHOT"
 scalaVersion := sys.props("scala_version")
 
-fork in Test := true
+Test / fork := true
 
 val ScalatraVersion = sys.props("scalatra_version")
 
@@ -15,7 +15,7 @@ libraryDependencies ++= Seq(
 
 enablePlugins(ScalatraPlugin)
 
-containerPort in Jetty := 8090
+Jetty / containerPort := 8090
 
 lazy val check = taskKey[Unit]("check if / is available")
 

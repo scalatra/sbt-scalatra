@@ -1,5 +1,5 @@
 # Check if jetty is started or not
-> jetty:start
+> Jetty/start
 
 # wait for servlet container to start
 $ sleep 10000
@@ -7,4 +7,4 @@ $ sleep 10000
 # check if service is mounted
 > check
 
-> jetty:stop
+> Jetty/stop

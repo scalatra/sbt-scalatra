@@ -1,5 +1,5 @@
 # Check if browse command enabled
-> jetty:start
+> Jetty/start
 
 # wait for servlet container to start
 $ sleep 10000
@@ -9,4 +9,4 @@ $ sleep 10000
 
 $ sleep 10000
 
-> jetty:stop
+> Jetty/stop
