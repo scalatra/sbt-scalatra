@@ -4,7 +4,7 @@ lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
   name := "sbt-scalatra",
   sbtPlugin := true,
-  version := "1.0.4",
+  version := "1.0.5-SNAPSHOT",
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   libraryDependencies += {
     Defaults.sbtPluginExtra(
