@@ -22,14 +22,16 @@ lazy val check = taskKey[Unit]("check if / is available")
 
 check := {
 
-  import org.http4s._
+  import org.http4s.implicits._
+  import cats.effect.unsafe.implicits.global
 
-  val client = org.http4s.client.blaze.defaultClient
-  val uri = Uri.uri("http://localhost:8090/")
+  org.http4s.blaze.client.BlazeClientBuilder[cats.effect.IO].resource.use {
+    client =>
+      val uri = uri"http://localhost:8090/"
 
-  client.expect[String](uri).unsafePerformSyncAttempt.fold(
-    error => sys.error("unexpected result: " + error),
-    res => if (res != "hey") sys.error("unexpected output: " + res) else ()
-  )
+      client.expect[String](uri).map(
+        res => if (res != "hey") sys.error("unexpected output: " + res) else ()
+      )
+  }.unsafeRunSync()
 
 }
