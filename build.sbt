@@ -9,8 +9,8 @@ lazy val root = (project in file(".")).settings(
   libraryDependencies += {
     Defaults.sbtPluginExtra(
       "com.earldouglas" % "xsbt-web-plugin" % "4.2.5",
-      (sbtBinaryVersion in pluginCrossBuild).value,
-      (scalaBinaryVersion in pluginCrossBuild).value
+      (pluginCrossBuild / sbtBinaryVersion).value,
+      (pluginCrossBuild / scalaBinaryVersion).value
     )
   },
   publishTo := {
