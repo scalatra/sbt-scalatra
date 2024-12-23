@@ -10,7 +10,7 @@ jobs:
       matrix:
         java: [17, 21]
     env:
-      JAVA_OPTS: -Xm2048M
+      JAVA_OPTS: -Xmx2048M
 
     steps:
     - uses: actions/checkout@v4
