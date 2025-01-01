@@ -1,5 +1,3 @@
-import scalariform.formatter.preferences._
-
 lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
   name := "sbt-scalatra",
@@ -14,7 +12,8 @@ lazy val root = (project in file(".")).settings(
     )
   },
   publishTo := {
-    if (version.value.trim.endsWith("SNAPSHOT")) Some(Opts.resolver.sonatypeSnapshots)
+    if (version.value.trim.endsWith("SNAPSHOT"))
+      Some(Opts.resolver.sonatypeSnapshots)
     else Some(Opts.resolver.sonatypeStaging)
   },
   publishMavenStyle := true,
@@ -45,12 +44,9 @@ lazy val root = (project in file(".")).settings(
   </developers>
 )
 
-scalariformPreferences := scalariformPreferences.value
-  .setPreference(DanglingCloseParenthesis, Force)
-
 enablePlugins(ScriptedPlugin)
 
 scriptedLaunchOpts ++= Seq(
   "scalatra_version" -> "2.8.4",
-  "scala_version" -> "2.13.15",
-).map{ case (k, v) => s"-D$k=$v" }
+  "scala_version" -> "2.13.15"
+).map { case (k, v) => s"-D$k=$v" }

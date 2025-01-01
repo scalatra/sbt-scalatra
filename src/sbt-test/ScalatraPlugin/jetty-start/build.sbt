@@ -19,19 +19,23 @@ Jetty / containerPort := 8090
 
 lazy val check = taskKey[Unit]("check if / is available")
 
-
 check := {
 
   import org.http4s.implicits._
   import cats.effect.unsafe.implicits.global
 
-  org.http4s.blaze.client.BlazeClientBuilder[cats.effect.IO].resource.use {
-    client =>
+  org.http4s.blaze.client
+    .BlazeClientBuilder[cats.effect.IO]
+    .resource
+    .use { client =>
       val uri = uri"http://localhost:8090/"
 
-      client.expect[String](uri).map(
-        res => if (res != "hey") sys.error("unexpected output: " + res) else ()
-      )
-  }.unsafeRunSync()
+      client
+        .expect[String](uri)
+        .map(res =>
+          if (res != "hey") sys.error("unexpected output: " + res) else ()
+        )
+    }
+    .unsafeRunSync()
 
 }
