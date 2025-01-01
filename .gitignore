@@ -21,3 +21,9 @@ project/plugins/project/
 .idea
 .idea_modules
 .bsp
+
+# metals artifacts
+.vscode
+.metals
+.bloop
+**/metals.sbt
