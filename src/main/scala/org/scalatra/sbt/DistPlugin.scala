@@ -1,6 +1,10 @@
 package org.scalatra.sbt
 
 import java.util.regex.Pattern
+import java.io.File
+import java.util.zip.ZipFile
+
+import scala.sys.process._
 
 import _root_.sbt._
 import Def.Initialize
@@ -40,7 +44,7 @@ object DistPlugin extends AutoPlugin {
     Def.task {
       IO.delete(tgt.value)
       val (libs, dirs) =
-        cp.value.files partition Compat.ClasspathUtilities.isArchive
+        cp.value.files partition isArchive
       val jars =
         libs.descendantsExcept(GlobFilter("*"), excl.value) pair Path.flat(
           tgt.value / "lib"
@@ -51,6 +55,19 @@ object DistPlugin extends AutoPlugin {
       }
 
       (IO.copy(jars) ++ IO.copy(classesAndResources)).toSeq
+    }
+  }
+
+  private def isArchive(file: File): Boolean = {
+    if (!file.exists() || !file.isFile) {
+      false
+    } else {
+      try {
+        new ZipFile(file)
+        true
+      } catch {
+        case _: Exception => false
+      }
     }
   }
 
@@ -76,7 +93,7 @@ object DistPlugin extends AutoPlugin {
         envExports
       )
     )
-    Compat.executeProccess("chmod +x %s".format(f.getAbsolutePath), logger)
+    "chmod +x %s".format(f.getAbsolutePath) ! logger
     f
   }
 
@@ -104,7 +121,7 @@ object DistPlugin extends AutoPlugin {
   }
 
   private def classPathString(base: File, libFiles: Seq[File]) = {
-    (libFiles filter Compat.ClasspathUtilities.isArchive map (_.relativeTo(
+    (libFiles filter isArchive map (_.relativeTo(
       base
     ))).flatten mkString java.io.File.pathSeparator
   }
