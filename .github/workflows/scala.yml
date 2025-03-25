@@ -22,4 +22,4 @@ jobs:
     - name: Setup SBT
       uses: sbt/setup-sbt@v1
     - name: Run tests
-      run: sbt scripted
+      run: sbt scalafmtSbtCheck "+ scalafmtCheckAll" scripted
