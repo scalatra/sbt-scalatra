@@ -48,5 +48,5 @@ enablePlugins(ScriptedPlugin)
 
 scriptedLaunchOpts ++= Seq(
   "scalatra_version" -> "2.8.4",
-  "scala_version" -> "2.13.15"
+  "scala_version" -> "2.13.18"
 ).map { case (k, v) => s"-D$k=$v" }
