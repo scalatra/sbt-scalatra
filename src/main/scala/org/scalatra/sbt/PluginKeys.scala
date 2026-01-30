@@ -1,7 +1,7 @@
 package org.scalatra.sbt
 
-import sbt._
-import Keys._
+import sbt.*
+import Keys.*
 
 object PluginKeys {
   val browse =

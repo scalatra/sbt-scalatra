@@ -1,11 +1,11 @@
 package org.scalatra.sbt
 
-import sbt._
-import Keys._
+import sbt.*
+import Keys.*
 import java.net.URI
 import com.earldouglas.xwp.ContainerPlugin.autoImport.containerPort
 import com.earldouglas.xwp.JettyPlugin
-import com.earldouglas.xwp.JettyPlugin.{projectSettings => jettySettings}
+import com.earldouglas.xwp.JettyPlugin.projectSettings as jettySettings
 import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
 
 object ScalatraPlugin extends AutoPlugin {
@@ -13,7 +13,7 @@ object ScalatraPlugin extends AutoPlugin {
 
   val autoImport = PluginKeys
 
-  import autoImport._
+  import autoImport.*
 
   val browseTask = browse := {
     val log = streams.value.log
@@ -37,9 +37,9 @@ object ScalatraPlugin extends AutoPlugin {
     }
   }
 
-  val scalatraSettings: Seq[Def.Setting[_]] = jettySettings ++ Seq(browseTask)
+  val scalatraSettings: Seq[Def.Setting[?]] = jettySettings ++ Seq(browseTask)
 
-  val scalatraWithDist: Seq[Def.Setting[_]] =
+  val scalatraWithDist: Seq[Def.Setting[?]] =
     scalatraSettings ++ DistPlugin.distSettings
 
   override lazy val projectSettings = scalatraSettings

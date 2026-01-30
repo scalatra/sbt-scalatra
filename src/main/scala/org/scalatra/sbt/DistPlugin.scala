@@ -4,12 +4,12 @@ import java.util.regex.Pattern
 import java.io.File
 import java.util.zip.ZipFile
 
-import scala.sys.process._
+import scala.sys.process.*
 
-import _root_.sbt._
+import _root_.sbt.*
 import Def.Initialize
-import Keys._
-import Defaults._
+import Keys.*
+import Defaults.*
 import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
 
 object DistPlugin extends AutoPlugin {
@@ -32,7 +32,7 @@ object DistPlugin extends AutoPlugin {
   }
 
   val autoImport = DistKeys
-  import autoImport._
+  import autoImport.*
 
   val Dist = config("dist")
 
