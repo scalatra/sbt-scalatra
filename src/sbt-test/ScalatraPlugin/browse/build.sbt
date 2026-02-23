@@ -27,22 +27,16 @@ Jetty / containerPort := 8090
 lazy val check = taskKey[Unit]("check if / is available")
 
 check := {
+  import java.net.http.{HttpClient, HttpRequest, HttpResponse}
+  import java.nio.charset.StandardCharsets
 
-  import org.http4s.implicits._
-  import cats.effect.unsafe.implicits.global
+  val res = HttpClient
+    .newHttpClient()
+    .send(
+      HttpRequest.newBuilder(new URI("http://localhost:8090")).build(),
+      HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8)
+    )
+    .body()
 
-  org.http4s.blaze.client
-    .BlazeClientBuilder[cats.effect.IO]
-    .resource
-    .use { client =>
-      val uri = uri"http://localhost:8090/"
-
-      client
-        .expect[String](uri)
-        .map(res =>
-          if (res != "hey") sys.error("unexpected output: " + res) else ()
-        )
-    }
-    .unsafeRunSync()
-
+  if (res != "hey") sys.error("unexpected output: " + res) else ()
 }
