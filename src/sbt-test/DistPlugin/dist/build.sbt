@@ -16,9 +16,8 @@ Test / fork := true
 val ScalatraVersion = sys.props("scalatra_version")
 
 libraryDependencies ++= Seq(
-  "org.scalatra" %% "scalatra" % ScalatraVersion,
-  "org.scalatra" %% "scalatra-specs2" % ScalatraVersion % "test",
-  "javax.servlet" % "javax.servlet-api" % "3.1.0" % "provided"
+  "org.scalatra" %% "scalatra-javax" % ScalatraVersion,
+  "org.scalatra" %% "scalatra-specs2-javax" % ScalatraVersion % "test",
 )
 
 enablePlugins(DistPlugin)
