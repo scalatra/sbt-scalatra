@@ -93,7 +93,7 @@ object DistPlugin extends AutoPlugin {
         envExports
       )
     )
-    "chmod +x %s".format(f.getAbsolutePath) ! logger
+    s"chmod +x ${f.getAbsolutePath}" ! logger
     f
   }
 
