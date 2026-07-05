@@ -48,6 +48,6 @@ lazy val root = (project in file(".")).settings(
 enablePlugins(ScriptedPlugin)
 
 scriptedLaunchOpts ++= Seq(
-  "scalatra_version" -> "3.1.2",
+  "scalatra_version" -> "3.2.0",
   "scala_version" -> "2.13.18"
 ).map { case (k, v) => s"-D$k=$v" }
