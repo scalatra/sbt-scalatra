@@ -14,8 +14,8 @@ addSbtPlugin("org.scalatra.sbt" % "sbt-scalatra" % "1.0.4")
 ## ScalatraPlugin
 
 This plugin adds a `browse` task, to open the current project in a browser.
-It also enables `JettyPlugin` provided by `xsbt-web-plugin`,
-so you can use task '`Jetty/start`' and '`Jetty/stop`'.
+It also enables `SbtWar` provided by `sbt-war`,
+so you can use the `warStart` and `warStop` tasks.
 
 ### usage
 
@@ -26,9 +26,9 @@ enablePlugins(ScalatraPlugin)
 Execute the `browse` task from sbt shell, the browser starts up.
 
 ```
-> Jetty/start
+> warStart
 > browse
-> Jetty/stop
+> warStop
 ```
 
 ## DistPlugin

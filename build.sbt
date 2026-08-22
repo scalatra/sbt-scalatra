@@ -6,7 +6,7 @@ lazy val root = (project in file(".")).settings(
   scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature"),
   libraryDependencies += {
     Defaults.sbtPluginExtra(
-      "com.earldouglas" % "xsbt-web-plugin" % "4.2.5",
+      "com.earldouglas" % "sbt-war" % "5.2.1",
       (pluginCrossBuild / sbtBinaryVersion).value,
       (pluginCrossBuild / scalaBinaryVersion).value
     )

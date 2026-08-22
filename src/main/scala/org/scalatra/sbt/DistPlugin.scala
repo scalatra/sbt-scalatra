@@ -10,9 +10,12 @@ import _root_.sbt.*
 import Def.Initialize
 import Keys.*
 import Defaults.*
-import com.earldouglas.xwp.WebappPlugin.autoImport.webappPrepare
+import com.earldouglas.sbt.war.WebappComponentsPlugin
+import com.earldouglas.sbt.war.WebappComponentsPlugin.autoImport.warResources
 
 object DistPlugin extends AutoPlugin {
+
+  override def requires = WebappComponentsPlugin
 
   object DistKeys {
     val dist = taskKey[File](
@@ -127,7 +130,7 @@ object DistPlugin extends AutoPlugin {
   }
 
   private def stageTask: Initialize[Task[Seq[File]]] = {
-    val webRes = webappPrepare / target
+    val webRes = Runtime / warResources
     val excl = Dist / excludeFilter
     val libFiles = Dist / assembleJarsAndClasses
     val tgt = Dist / target
@@ -151,13 +154,13 @@ object DistPlugin extends AutoPlugin {
       if (!logsDir.exists()) logsDir.mkdirs()
 
       s.value.log.info(
-        "Adding " + webRes.value + " to dist in " + tgt.value + "/webapp"
+        "Adding web resources to dist in " + tgt.value + "/webapp"
       )
-      val resourceFilesFinder =
-        webRes.value.descendantsExcept(GlobFilter("*"), excl.value)
-      val resourceFiles = IO.copy(
-        resourceFilesFinder pair Path.rebase(webRes.value, tgt.value / "webapp")
-      )
+      val resourceMappings = webRes.value.iterator.collect {
+        case (path, file) if !excl.value.accept(file) =>
+          file -> (tgt.value / "webapp" / path)
+      }.toSeq
+      val resourceFiles = IO.copy(resourceMappings)
 
       libFiles.value ++ Seq(launch, logsDir) ++ resourceFiles
     }
@@ -195,7 +198,6 @@ object DistPlugin extends AutoPlugin {
       HiddenFileFilter || PatternFileFilter(
         ".*/WEB-INF/classes"
       ) || PatternFileFilter(".*/WEB-INF/lib")
-      // could use (webappDest in webapp).value.getCanonicalPath instead of .*, but webappDest is a task and SBT settings cant depend on tasks
     },
     Dist / target := (Compile / target)(_ / "dist").value,
     Dist / assembleJarsAndClasses := assembleJarsAndClassesTask.value,

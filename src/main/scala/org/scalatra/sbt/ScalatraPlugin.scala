@@ -3,13 +3,11 @@ package org.scalatra.sbt
 import sbt.*
 import Keys.*
 import java.net.URI
-import com.earldouglas.xwp.ContainerPlugin.autoImport.containerPort
-import com.earldouglas.xwp.JettyPlugin
-import com.earldouglas.xwp.JettyPlugin.projectSettings as jettySettings
-import com.earldouglas.xwp.JettyPlugin.autoImport.Jetty
+import com.earldouglas.sbt.war.SbtWar
+import com.earldouglas.sbt.war.SbtWar.autoImport.warPort
 
 object ScalatraPlugin extends AutoPlugin {
-  override def requires = JettyPlugin
+  override def requires = SbtWar
 
   val autoImport = PluginKeys
 
@@ -18,11 +16,7 @@ object ScalatraPlugin extends AutoPlugin {
   val browseTask = browse := {
     val log = streams.value.log
 
-    // read port for jetty, default to 8080
-    val port = {
-      val p = (Jetty / containerPort).value
-      if (p == -1) 8080 else p
-    }
+    val port = warPort.value
 
     val url = URI.create("http://localhost:%s" format port)
     try {
@@ -37,7 +31,7 @@ object ScalatraPlugin extends AutoPlugin {
     }
   }
 
-  val scalatraSettings: Seq[Def.Setting[?]] = jettySettings ++ Seq(browseTask)
+  val scalatraSettings: Seq[Def.Setting[?]] = Seq(browseTask)
 
   val scalatraWithDist: Seq[Def.Setting[?]] =
     scalatraSettings ++ DistPlugin.distSettings
