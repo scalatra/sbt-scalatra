@@ -50,6 +50,6 @@ addSbtPlugin("com.github.sbt" % "sbt2-compat" % "0.2.0")
 enablePlugins(ScriptedPlugin)
 
 scriptedLaunchOpts ++= Seq(
-  "scalatra_version" -> "3.2.0",
-  "scala_version" -> "2.13.18"
+  "scalatra_version" -> "3.2.1",
+  "scala_version" -> "3.3.9"
 ).map { case (k, v) => s"-D$k=$v" }
