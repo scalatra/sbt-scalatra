@@ -1,3 +1,7 @@
+ThisBuild / scalaVersion := "3.9.0"
+ThisBuild / crossScalaVersions := Seq("3.9.0")
+pluginCrossBuild / sbtVersion := "2.1.0"
+
 lazy val root = (project in file(".")).settings(
   organization := "org.scalatra.sbt",
   name := "sbt-scalatra",
