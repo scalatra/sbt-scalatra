@@ -178,7 +178,7 @@ object DistPlugin extends AutoPlugin {
       val zipFile = tgt.value / ".." / (nm.value + "-" + ver.value + ".zip")
       val paths = files.value pair Path.rebase(tgt.value, nm.value)
 
-      IO.zip(paths, zipFile)
+      IO.zip(paths, zipFile, None)
       zipFile
     }
   }
