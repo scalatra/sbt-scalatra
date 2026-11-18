@@ -5,6 +5,7 @@ import Keys.*
 import java.net.URI
 import com.earldouglas.sbt.war.SbtWar
 import com.earldouglas.sbt.war.SbtWar.autoImport.warPort
+import sbtcompat.PluginCompat.*
 
 object ScalatraPlugin extends AutoPlugin {
   override def requires = SbtWar

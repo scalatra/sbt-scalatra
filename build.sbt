@@ -53,3 +53,14 @@ scriptedLaunchOpts ++= Seq(
   "scalatra_version" -> "3.2.1",
   "scala_version" -> "3.3.9"
 ).map { case (k, v) => s"-D$k=$v" }
+
+crossScalaVersions += "2.12.21"
+
+pluginCrossBuild / sbtVersion := {
+  scalaBinaryVersion.value match {
+    case "2.12" =>
+      "1.13.1"
+    case _ =>
+      sbtVersion.value
+  }
+}
