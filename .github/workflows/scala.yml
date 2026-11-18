@@ -31,4 +31,5 @@ jobs:
            --server
            scalafmtSbtCheck
            "+ scalafmtCheckAll"
+           "+ test"
            scripted
